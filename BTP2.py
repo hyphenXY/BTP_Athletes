@@ -68,7 +68,7 @@ def extract_data_from_html(html_content, driver):
     for data in datas:
         rows = data.find_all('tr', {'role': 'button'})
         for index, row in enumerate(rows):
-            extracted_data = [row.get_text(separator=' $ ')]
+            extracted_data = [row.get_text(separator=" ")]
 
             try:
                 # Click the dropdown button using JavaScript
@@ -94,7 +94,7 @@ def extract_data_from_html(html_content, driver):
                 for i in dropdown_content:
                     details = i.find_all('div', {'class': 'dropdown-item'})
                     for detail in details:
-                        extracted_data.append(detail.get_text(separator=' $ '))
+                        extracted_data.append(detail.get_text(separator=" "))
             except Exception as e:
                 print(f"An error occurred while clicking dropdown: {e}")
                 continue
@@ -115,9 +115,9 @@ def main():
     # base_url = "https://worldathletics.org/athletes/ethiopia/tamirat-tola-14589459"
 
     # store in tsv file
-    with open('Data.tsv', 'w') as file:
+    with open('Data.csv', 'w') as file:
         file.write(
-            'Discipline\tMark\tDate\tCountry\tResultScore\tCompetition\tCategory\tRace\tPlace\n')
+            '"Discipline Mark Date", "Country", "ResultScore", "Competition", "Category", "Race", "Place"\n')
 
     # Initialize the Selenium driver once
     chrome_options = Options()
@@ -135,9 +135,10 @@ def main():
         if html_content:
             # Extract data from HTML content
             data = extract_data_from_html(html_content, driver)
-            with open('Data.tsv', 'a') as file:
+            with open('Data.csv', 'a') as file:
                 for d in data:
-                    file.write(f"{d}\n")
+                    formatted_row = ', '.join(f'"{value}"' for value in d)
+                    file.write(f"{formatted_row}\n")
         else:
             print("Failed to retrieve page content.")
 
