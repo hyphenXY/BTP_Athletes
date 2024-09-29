@@ -68,7 +68,7 @@ def extract_data_from_html(html_content, driver):
     for data in datas:
         rows = data.find_all('tr', {'role': 'button'})
         for index, row in enumerate(rows):
-            extracted_data = [row.get_text(separator=" ")]
+            extracted_data = [row.get_text(separator=", ")]
 
             try:
                 # Click the dropdown button using JavaScript
@@ -94,7 +94,7 @@ def extract_data_from_html(html_content, driver):
                 for i in dropdown_content:
                     details = i.find_all('div', {'class': 'dropdown-item'})
                     for detail in details:
-                        extracted_data.append(detail.get_text(separator=" "))
+                        extracted_data.append(detail.get_text(separator=", "))
             except Exception as e:
                 print(f"An error occurred while clicking dropdown: {e}")
                 continue
@@ -109,7 +109,7 @@ def main():
     # take the athlete segments from the csv file
     with open('Players.csv', 'r', errors='ignore') as file:
         # after 1st line, after 3 commas, take the 1st value
-        athlete_segments = [line.split(',')[3]
+        athlete_segments = [(line.split(','))
                             for line in file.readlines()[1:]]
     # Base URL of the athlete
     # base_url = "https://worldathletics.org/athletes/ethiopia/tamirat-tola-14589459"
@@ -127,7 +127,8 @@ def main():
     driver = webdriver.Chrome(options=chrome_options)
 
     # Fetch the HTML content of the page
-    for segment in athlete_segments:
+    for seg in athlete_segments:
+        segment=seg[3]
         if segment[0] != 'h':
             continue
         html_content = fetch_html_with_selenium(driver, segment)
@@ -138,7 +139,7 @@ def main():
             with open('Data.csv', 'a') as file:
                 for d in data:
                     formatted_row = ', '.join(f'"{value}"' for value in d)
-                    file.write(f"{formatted_row}\n")
+                    file.write(f"{seg[0]}, {seg[1]}, {seg[2]}, {formatted_row}\n")
         else:
             print("Failed to retrieve page content.")
 
