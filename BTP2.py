@@ -107,17 +107,23 @@ def extract_data_from_html(html_content, driver):
 def main():
     athlete_segments = []
     # take the athlete segments from the csv file
-    with open('Players.csv', 'r', errors='ignore') as file:
-        # after 1st line, after 3 commas, take the 1st value
+
+    # go to line 200, and after that store all the data in athlete_segments #######################################3
+    with open('Players.csv', 'r') as file:
         athlete_segments = [(line.split(','))
-                            for line in file.readlines()[1:]]
+                            for line in file.readlines()[199:]]
+
+    # with open('Players.csv', 'r', errors='ignore') as file:
+    #     # after 1st line, after 3 commas, take the 1st value
+    #     athlete_segments = [(line.split(','))
+    #                         for line in file.readlines()[1:]]
     # Base URL of the athlete
     # base_url = "https://worldathletics.org/athletes/ethiopia/tamirat-tola-14589459"
 
-    # store in tsv file
-    with open('Data.csv', 'w') as file:
-        file.write(
-            '"Discipline Mark Date", "Country", "ResultScore", "Competition", "Category", "Race", "Place"\n')
+    # # store in tsv file
+    # with open('Data.csv', 'w') as file:
+    #     file.write(
+    #         '"Discipline Mark Date", "Country", "ResultScore", "Competition", "Category", "Race", "Place"\n')
 
     # Initialize the Selenium driver once
     chrome_options = Options()
@@ -128,7 +134,7 @@ def main():
 
     # Fetch the HTML content of the page
     for seg in athlete_segments:
-        segment=seg[3]
+        segment = seg[3]
         if segment[0] != 'h':
             continue
         html_content = fetch_html_with_selenium(driver, segment)
@@ -139,7 +145,8 @@ def main():
             with open('Data.csv', 'a') as file:
                 for d in data:
                     formatted_row = ', '.join(f'"{value}"' for value in d)
-                    file.write(f"{seg[0]}, {seg[1]}, {seg[2]}, {formatted_row}\n")
+                    file.write(f"{seg[0]}, {seg[1]}, {
+                               seg[2]}, {formatted_row}\n")
         else:
             print("Failed to retrieve page content.")
 
