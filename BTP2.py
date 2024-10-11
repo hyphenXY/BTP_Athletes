@@ -41,8 +41,8 @@ def fetch_html_with_selenium(driver, url):
         # enter 2 0 1 9
         ActionChains(driver).send_keys('2').perform()
         ActionChains(driver).send_keys('0').perform()
-        ActionChains(driver).send_keys('1').perform()
-        ActionChains(driver).send_keys('9').perform()
+        ActionChains(driver).send_keys('2').perform()
+        ActionChains(driver).send_keys('3').perform()
         ActionChains(driver).send_keys(Keys.ENTER).perform()
 
         # Allow time for JavaScript to load the results page
@@ -111,7 +111,8 @@ def main():
     # go to line 200, and after that store all the data in athlete_segments #######################################3
     with open('Players.csv', 'r') as file:
         athlete_segments = [(line.split(','))
-                            for line in file.readlines()[199:]]
+                            for line in file.readlines()]
+        # print(athlete_segments[0], athlete_segments[1])
 
     # with open('Players.csv', 'r', errors='ignore') as file:
     #     # after 1st line, after 3 commas, take the 1st value
@@ -121,9 +122,9 @@ def main():
     # base_url = "https://worldathletics.org/athletes/ethiopia/tamirat-tola-14589459"
 
     # # store in tsv file
-    # with open('Data.csv', 'w') as file:
-    #     file.write(
-    #         '"Discipline Mark Date", "Country", "ResultScore", "Competition", "Category", "Race", "Place"\n')
+    with open('Data.csv', 'w') as file:
+        file.write(
+            '"Place","Competitor","DOB","Nationality","Discipline Mark Date", "Country", "ResultScore", "Competition", "Category", "Race", "Place"\n')
 
     # Initialize the Selenium driver once
     chrome_options = Options()
@@ -133,8 +134,9 @@ def main():
     driver = webdriver.Chrome(options=chrome_options)
 
     # Fetch the HTML content of the page
-    for seg in athlete_segments:
-        segment = seg[3]
+    for seg in athlete_segments[1:]:
+        segment = "https://worldathletics.org"+seg[7]
+        print(segment)
         if segment[0] != 'h':
             continue
         html_content = fetch_html_with_selenium(driver, segment)
@@ -146,7 +148,7 @@ def main():
                 for d in data:
                     formatted_row = ', '.join(f'"{value}"' for value in d)
                     file.write(f"{seg[0]}, {seg[1]}, {
-                               seg[2]}, {formatted_row}\n")
+                               seg[2]}, {seg[3]}, {seg[5]}, {seg[6]}, {formatted_row}\n")
         else:
             print("Failed to retrieve page content.")
 
