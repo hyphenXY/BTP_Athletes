@@ -9,21 +9,26 @@ def main():
         # skip 1st line
         next(reader)
         for row in reader:
-            name = row[0]
-            dob = row[1]
-            country = row[2]
-            date = row[5]
-            # print(date)
-            city = row[9]
+            place=row[0]
+            name=row[1]
+            dob=row[2]
+            nation=row[3]
+            score=row[4]
+            date=row[8]
+            resultscore=row[10]
+            city=(row[12])
+            # remove all the special characters from front and behind
+            city = re.sub(r"^\W+|\W+$", "", city)
 
-            lst.append([name, dob, country, date, city])
+            lst.append([place, name, dob, nation, score, date, resultscore, city])
 
-    # print(lst)
+    for i in lst:
+        print(i)
 
     # Write to a CSV file, with date and city in separate columns
     with open('Cities_and_Dates.csv', 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(['Name', 'DOB', 'Country', 'Date', 'City'])  #
+        writer.writerow(['Place', 'Competitor', 'DOB', 'Nationality', 'Score', 'Date', 'ResultScore', 'City'])
         for row in lst:
             writer.writerow(row)
 
