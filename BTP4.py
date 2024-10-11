@@ -8,12 +8,12 @@ import requests
 import sys
 
 import json
-                
+
 # response = requests.request("GET", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/delhi?unitGroup=metric&include=current&key=G8DJG324M57QK384ZFD2RXC6W&contentType=json")
 # if response.status_code!=200:
 #   print('Unexpected Status code: ', response.status_code)
 #   sys.exit() 
-  
+
 # r2 = requests.get(f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/New York City,NY?unitGroup=metric&key={APIKEY}&contentType=json&elements=datetime,pm1,pm2p5,pm10,o3,no2,so2,co,aqius,aqieur")
 
 # print(response.text)

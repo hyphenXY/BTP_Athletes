@@ -1,0 +1,3 @@
+location,date,temperature,humidity,wind_speed,precipitation,pm2.5,pm10,o3,no2,so2,co,aqi_us
+ Wien, 12 OCT 2019,,,,,,,,,,,
+ London, 28 APR 2019,,,,,,,,,,,
