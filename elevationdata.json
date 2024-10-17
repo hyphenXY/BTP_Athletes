@@ -1,0 +1,13 @@
+{
+    "results": [
+        {
+            "dataset": "srtm90m",
+            "elevation": 255.0,
+            "location": {
+                "lat": 28.6273928,
+                "lng": 77.1716954
+            }
+        }
+    ],
+    "status": "OK"
+}

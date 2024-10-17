@@ -18,7 +18,8 @@ def main():
                 score=row[4]
                 date=row[8]
                 resultscore=row[10]
-                city=(row[-3])
+                # city=(row[-3])
+                city=(row[6])
                 # remove all the special characters from front and behind
                 city = re.sub(r"^\W+|\W+$", "", city)
 
@@ -31,7 +32,8 @@ def main():
                 score=row[4]
                 date=row[8]
                 resultscore=row[10]
-                city=(row[-4])
+                # city=(row[-4])
+                city=(row[6])
                 # remove all the special characters from front and behind
                 city = re.sub(r"^\W+|\W+$", "", city)
 
@@ -44,7 +46,8 @@ def main():
                 score=row[4]
                 date=row[8]
                 resultscore=row[10]
-                city=(row[-5])
+                # city=(row[-5])
+                city=(row[6])
                 # remove all the special characters from front and behind
                 city = re.sub(r"^\W+|\W+$", "", city)
 
@@ -57,7 +60,8 @@ def main():
                 score=row[4]
                 date=row[8]
                 resultscore=row[10]
-                city=(row[-5])
+                # city=(row[-5])
+                city = (row[6])
                 # remove all the special characters from front and behind
                 city = re.sub(r"^\W+|\W+$", "", city)
 
@@ -69,17 +73,16 @@ def main():
     # for i in lst:
     #     print(i)
     
-    for i in lengthdict:
-        print(i)
+    # for i in lengthdict:
+    #     print(i)
 
     # Write to a CSV file, with date and city in separate columns
-    # with open('Cities_and_Dates.csv', 'w', newline='') as f:
-    #     writer = csv.writer(f)
-    #     writer.writerow(['Place', 'Competitor', 'DOB', 'Nationality', 'Score', 'Date', 'ResultScore', 'City'])
-    #     for row in lst:
-    #         writer.writerow(row)
+    with open('Cities_and_Dates.csv', 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Place', 'Competitor', 'DOB', 'Nationality', 'Score', 'Date', 'ResultScore', 'City'])
+        for row in lst:
+            writer.writerow(row)
 
 
 if __name__ == '__main__':
     main()
-
