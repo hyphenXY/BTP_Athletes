@@ -101,6 +101,8 @@
 #     output_file = 'weather_pollution_data.csv'
     
 #     process_and_write_csv(input_file, output_file)
+import re
+from select import poll
 import requests
 import json
 import csv
@@ -159,8 +161,10 @@ def process_csv(file_path):
         for row in reader:
             location = row['City']
             date = row['Date']
-            weather_data = fetch_weather_data(location, date)
-            pollution_data = fetch_pollution_data(location, date)
+            # weather_data = fetch_weather_data(location, date)
+            weather_data = fetch_weather_data("manali", "23 Oct 2024")
+            # pollution_data = fetch_pollution_data(location, date)
+            pollution_data = fetch_pollution_data("manali", "15 Oct 2024")
             if weather_data and pollution_data:
                 results.append({
                     "location": location,
@@ -168,6 +172,7 @@ def process_csv(file_path):
                     "weather_data": weather_data,
                     "pollution_data": pollution_data
                 })
+            print(results)
     return results
 
 def save_results(results, output_file):
@@ -175,9 +180,9 @@ def save_results(results, output_file):
         json.dump(results, f, indent=2)
 
 if __name__ == "__main__":
-    input_file = 'Cities_and_dates2.csv'
+    input_file = 'Cities_and_Dates2.csv'
     output_file = 'weather_pollution_data.json'
     
     results = process_csv(input_file)
-    save_results(results, output_file)
+    # save_results(results, output_file)
     print(f"Data fetched and saved to {output_file}")
