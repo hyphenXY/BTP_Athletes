@@ -41,7 +41,7 @@ def main():
             city=city.replace('"', '')
 
             lst.append([place, name, dob, nation,
-                        score, date, resultscore])
+                        score, date,city,  resultscore])
 
         #     lengthdict.add(len(row))
 
@@ -75,7 +75,7 @@ def main():
     with open('Cities_and_Dates1.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['Place', 'Competitor', 'DOB',
-                        'Nationality', 'Score', 'Date', 'city'])
+                        'Nationality', 'Score', 'Date','res', 'city'])
         for row in lst:
             writer.writerow(row)
 
