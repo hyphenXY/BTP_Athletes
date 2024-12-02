@@ -22,6 +22,7 @@ def main():
             score = row[4]
             date = row[8]
             resultscore = row[10]
+            resultscore = re.sub(r"^\W+|\W+$", "", resultscore)
             # city=(row[-3])
             if len(row) == 14:
                 city = row[-3]
@@ -37,9 +38,10 @@ def main():
             # elif len(row6) == 6:
             #     city = row6[-2]
             city = re.sub(r"^\W+|\W+$", "", city)
+            city=city.replace('"', '')
 
             lst.append([place, name, dob, nation,
-                        score, date, resultscore, city])
+                        score, date, resultscore])
 
         #     lengthdict.add(len(row))
 
@@ -65,15 +67,15 @@ def main():
         #                 score, date, resultscore, city])            
     # for i in lst:
     #     print(i)
-
-    for i in lengthdict:
+    # print('y')
+    for i in lst:
         print(i)
 
     # Write to a CSV file, with date and city in separate columns
     with open('Cities_and_Dates1.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['Place', 'Competitor', 'DOB',
-                        'Nationality', 'Score', 'Date', 'ResultScore', 'City'])
+                        'Nationality', 'Score', 'Date', 'city'])
         for row in lst:
             writer.writerow(row)
 
