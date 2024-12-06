@@ -115,19 +115,21 @@ def convert_date_format(date_string):
     return input_date.strftime("%Y-%m-%d")
 
 def fetch_weather_data(location, date):
-    base_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
+    formatted_date = convert_date_format(date)
+    
+    base_url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}/{formatted_date}/{formatted_date}?key={APIKEY}"
     params = {
         "unitGroup": "metric",
         "key": APIKEY,
         "contentType": "json",
         "include": "current"
     }
+    print(base_url)
     
-    formatted_date = convert_date_format(date)
-    url = f"{base_url}/{location}/{formatted_date}"
+    # url = f"{base_url}/{location}/{formatted_date}"
     
     try:
-        response = requests.get(url, params=params)
+        response = requests.get(base_url, params=params)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -135,7 +137,7 @@ def fetch_weather_data(location, date):
         return None
 
 def fetch_pollution_data(location, date):
-    base_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
+    base_url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/New York City,NY?unitGroup=metric&key={APIKEY}&contentType=json&elements=datetime,pm1,pm2p5,pm10,o3,no2,so2,co,aqius,aqieur"
     params = {
         "unitGroup": "metric",
         "key": APIKEY,
@@ -160,17 +162,19 @@ def process_csv(file_path):
         reader = csv.DictReader(file)
         for row in reader:
             location = row['City']
+            location=location.replace(" ","")
             date = row['Date']
             weather_data = fetch_weather_data(location, date)
             # weather_data = fetch_weather_data("manali", "23 Oct 2024")
-            pollution_data = fetch_pollution_data(location, date)
+            # pollution_data = fetch_pollution_data(location, date)
             # pollution_data = fetch_pollution_data("manali", "15 Oct 2024")
-            if weather_data and pollution_data:
+            # if weather_data and pollution_data:
+            if weather_data:
                 results.append({
                     "location": location,
                     "date": date,
                     "weather_data": weather_data,
-                    "pollution_data": pollution_data
+                    # "pollution_data": pollution_data
                 })
             print(results)
     return results
