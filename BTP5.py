@@ -161,10 +161,10 @@ def process_csv(file_path):
         for row in reader:
             location = row['City']
             date = row['Date']
-            # weather_data = fetch_weather_data(location, date)
-            weather_data = fetch_weather_data("manali", "23 Oct 2024")
-            # pollution_data = fetch_pollution_data(location, date)
-            pollution_data = fetch_pollution_data("manali", "15 Oct 2024")
+            weather_data = fetch_weather_data(location, date)
+            # weather_data = fetch_weather_data("manali", "23 Oct 2024")
+            pollution_data = fetch_pollution_data(location, date)
+            # pollution_data = fetch_pollution_data("manali", "15 Oct 2024")
             if weather_data and pollution_data:
                 results.append({
                     "location": location,
